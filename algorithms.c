@@ -130,6 +130,7 @@ double* backPack(int varNb, int consNb, double* cons, double** fact, double* coe
   glp_free_env();
 
   if(result <= 1.0005){
+    free(primals);
     return NULL;
   }
 

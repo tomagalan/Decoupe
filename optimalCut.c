@@ -12,7 +12,7 @@ int main(void)
   size_t len = 0;
   ssize_t read;
 
-  fp = fopen("instances/instance5", "r");
+  fp = fopen("instances/instance4", "r");
   if (fp == NULL)
       exit(EXIT_FAILURE);
 
@@ -98,10 +98,12 @@ int main(void)
     printf("\n----------------- Sac A Dos -------------------\n\n");
 
     primals = backPack(bagVarNb, bagConsNb, bagCons, bagFact, duals);
+    free(duals);
 
-    if(primals == NULL)
+    if(primals == NULL){
       break;
-
+    }
+      
     decVarNb ++;
 
     decFact = realloc(decFact, decVarNb * sizeof(double*));
@@ -110,11 +112,10 @@ int main(void)
 
   printf("Terminé !\n");
 
-  free(duals);
-  free(primals);
   for(i = 0; i < bagVarNb; i++) {
     free(bagFact[i]);
   }
+  free(primals);
   for(i = 0; i < decVarNb; i++) {
     free(decFact[i]);
   }
