@@ -12,9 +12,11 @@ int main(void)
   size_t len = 0;
   ssize_t read;
 
-  fp = fopen("instances/instance4", "r");
-  if (fp == NULL)
-      exit(EXIT_FAILURE);
+  fp = fopen("instances/instance5", "r");
+  if (fp == NULL){
+    printf("Le fichier spécifié n'existe pas !\n");
+    exit(EXIT_FAILURE);
+  }
 
   double longueurIni;
   double* longueursFin = malloc(0);
@@ -24,7 +26,7 @@ int main(void)
   getline(&line, &len, fp);
   getline(&line, &len, fp);
   sscanf(line, "%lf", &longueurIni);
-  printf("Longueur initiale: %lf\n", longueurIni);
+  printf("Longueur initiale: %g\n", longueurIni);
   getline(&line, &len, fp);
 
   double longueurCourante, demandeCourante;
@@ -34,7 +36,7 @@ int main(void)
   while ((read = getline(&line, &len, fp)) != -1) {
       sscanf(line, "%lf %lf", &longueurCourante, &demandeCourante);
       nbLongueurs ++;
-      printf("Longueur finale : %lf, demande : %lf\n", longueurCourante, demandeCourante);
+      printf("Longueur finale : %g, demande : %g\n", longueurCourante, demandeCourante);
       longueursFin = realloc(longueursFin, nbLongueurs * sizeof(double));
       demandes = realloc(demandes, nbLongueurs * sizeof(double));
       longueursFin[nbLongueurs-1] = longueurCourante;
@@ -58,15 +60,6 @@ int main(void)
       }
     }
   }
-
-  /* Impression de la matrice de départ correspondante */
-  for(i = 0; i < nbLongueurs; i++) {
-      for(j=0; j < nbLongueurs; j++) {
-          printf("%g ", decFact[i][j]);
-      }
-      printf("\n");
-  }
-  printf("\n");
 
   /* Définition des variables de départ pour la découpe et le sac à dos */
   int decVarNb = nbLongueurs;
