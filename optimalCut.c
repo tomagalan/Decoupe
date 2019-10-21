@@ -12,7 +12,7 @@ int main(void)
   size_t len = 0;
   ssize_t read;
 
-  fp = fopen("instances/instance1", "r");
+  fp = fopen("instances/instance5", "r");
   if (fp == NULL)
       exit(EXIT_FAILURE);
 
@@ -36,6 +36,7 @@ int main(void)
       nbLongueurs ++;
       printf("Longueur finale : %lf, demande : %lf\n", longueurCourante, demandeCourante);
       longueursFin = realloc(longueursFin, nbLongueurs * sizeof(double));
+      demandes = realloc(demandes, nbLongueurs * sizeof(double));
       longueursFin[nbLongueurs-1] = longueurCourante;
       demandes[nbLongueurs-1] = demandeCourante; 
   }
@@ -121,15 +122,9 @@ int main(void)
   free(decFact);
   free(longueursFin);
   free(demandes);
-  free(decCons);
 
   fclose(fp);
-  free(fp);
   free(line);
-  /*if (line){
-    printf("prout");
-    free(line);
-  }*/
 
   return 0;
 }
