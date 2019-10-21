@@ -48,7 +48,14 @@ int main(void)
   }
   
   for(i = 0; i < nbLongueurs; i++) {
-      decFact[i][i] = (double) ((int)longueurIni / (int)longueursFin[i]);
+    for(j=0; j < nbLongueurs; j++){
+      if(i == j){
+        decFact[i][j] = (double) ((int)longueurIni / (int)longueursFin[i]);
+      }
+      else{
+        decFact[i][j] = 0;
+      }
+    }
   }
 
   /* Impression de la matrice de départ correspondante */
@@ -80,7 +87,6 @@ int main(void)
 
   double* duals;
   double* primals;
-  double** verif;
 
   while(1) {
 
@@ -97,25 +103,33 @@ int main(void)
 
     decVarNb ++;
 
-    verif = realloc(decFact, decVarNb * sizeof(double*));
-    verif[decVarNb-1] = (double*)calloc(decConsNb, sizeof(double));
-
-    if(verif == NULL){
-      printf("ARR KROSSE PROBLEME\n");
-      return 1;
-    }
-
-    decFact = verif;
-
-    for(j = 0; j < decConsNb; j++) {
-      decFact[decVarNb-1][j] = primals[j];
-    }
+    decFact = realloc(decFact, decVarNb * sizeof(double*));
+    decFact[decVarNb-1] = primals;
   }
 
+  printf("Terminé !\n");
+
+  free(duals);
+  free(primals);
+  for(i = 0; i < bagVarNb; i++) {
+    free(bagFact[i]);
+  }
+  for(i = 0; i < decVarNb; i++) {
+    free(decFact[i]);
+  }
+  free(bagFact);
+  free(decFact);
+  free(longueursFin);
+  free(demandes);
+  free(decCons);
+
   fclose(fp);
-  /*if (line)
-      free(line);
-  exit(EXIT_SUCCESS);*/
+  free(fp);
+  free(line);
+  /*if (line){
+    printf("prout");
+    free(line);
+  }*/
 
   return 0;
 }

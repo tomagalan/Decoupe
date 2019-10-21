@@ -8,8 +8,8 @@ double* cut(int varNb, int consNb, double* cons, double** fact){
 
 	/* declare variables */
 	glp_prob *lp;
-	int ia[1+1000], ja[1+1000];
-	double ar[1+1000];
+	int ia[1+10000], ja[1+10000];
+	double ar[1+10000];
 
 	/* create problem */
   lp = glp_create_prob();
